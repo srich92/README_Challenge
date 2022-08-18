@@ -150,10 +150,33 @@ const questions = [
         
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data,err=> {
+        if (err) {
+            return console.log (err);
+        }
+        console.log('Your README.md file has been generated!')
+        });
+    }
+
 
 // TODO: Create a function to initialize app
-function init() {}
+const init = () => {
+    return inquirer.prpmpt(questions);
+}
 
 // Function call to initialize app
-init();
+init()
+.then(userInput =>{
+    return generateMarkdown(userInput);
+})
+
+.then(readmeInfo => {
+    return writeToFile(readmeInfo);
+})
+
+.catch(err =>{
+    console.log (err);
+})
+
+
